@@ -6,7 +6,7 @@ from spodernet.utils.logger import Logger
 from torch.autograd import Variable
 from sklearn import metrics
 
-log = Logger('evaluation{0}.py.txt'.format(datetime.datetime.now()))
+log = Logger('evaluation{0}.txt'.format(datetime.datetime.now()))
 
 def ranking_and_hits(model, dev_rank_batcher, vocab, name):
     log.info('')

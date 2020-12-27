@@ -1,0 +1,7 @@
+2020-12-26 02:24:08.775196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab
+2020-12-26 02:24:08.776196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_e1
+2020-12-26 02:24:08.780196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_rel
+2020-12-26 02:24:08.781196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_rel_eval
+2020-12-26 02:24:08.781196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_e2
+2020-12-26 02:24:08.781196 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_e2_multi1
+2020-12-26 02:24:08.786197 (INFO): Loading vocab from: \Users\eldad\.data\FB15K-237\vocab_e2_multi2
