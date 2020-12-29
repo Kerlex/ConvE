@@ -6,7 +6,8 @@ from spodernet.utils.logger import Logger
 from torch.autograd import Variable
 from sklearn import metrics
 
-log = Logger('evaluation{0}.txt'.format(datetime.datetime.now()))
+log = Logger('evaluation.txt')
+
 
 def ranking_and_hits(model, dev_rank_batcher, vocab, name):
     log.info('')
@@ -44,8 +45,8 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
 
             num = e1[i, 0].item()
             # save the prediction that is relevant
-            target_value1 = pred1[i,e2[i, 0].item()].item()
-            target_value2 = pred2[i,e1[i, 0].item()].item()
+            target_value1 = pred1[i, e2[i, 0].item()].item()
+            target_value2 = pred2[i, e1[i, 0].item()].item()
             # zero all known cases (this are not interesting)
             # this corresponds to the filtered setting
             pred1[i][filter1] = 0.0
@@ -53,7 +54,6 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
             # write base the saved values
             pred1[i][e2[i]] = target_value1
             pred2[i][e1[i]] = target_value2
-
 
         # sort and rank
         max_values, argsort1 = torch.sort(pred1, 1, descending=True)
@@ -63,8 +63,8 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
         argsort2 = argsort2.cpu().numpy()
         for i in range(e1.shape[0]):
             # find the rank of the target entities
-            rank1 = np.where(argsort1[i]==e2[i, 0].item())[0][0]
-            rank2 = np.where(argsort2[i]==e1[i, 0].item())[0][0]
+            rank1 = np.where(argsort1[i] == e2[i, 0].item())[0][0]
+            rank2 = np.where(argsort2[i] == e1[i, 0].item())[0][0]
             # rank+1, since the lowest rank is rank 1 not rank 0
             ranks.append(rank1+1)
             ranks_left.append(rank1+1)

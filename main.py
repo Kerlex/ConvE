@@ -14,7 +14,7 @@ from evaluation import ranking_and_hits
 from model import ConvE, DistMult, Complex
 
 from spodernet.preprocessing.pipeline import Pipeline, DatasetStreamer
-from spodernet.preprocessing.processors import JsonLoaderProcessors, Tokenizer, AddToVocab, SaveLengthsToState, StreamToHDF5, SaveMaxLengthsToState, CustomTokenizer
+from spodernet.preprocessing.processors import JsonLoaderProcessors,Tokenizer, AddToVocab, SaveLengthsToState, StreamToHDF5, SaveMaxLengthsToState,CustomTokenizer
 from spodernet.preprocessing.processors import ConvertTokenToIdx, ApplyFunction, ToLower, DictKey2ListMapper, ApplyFunction, StreamToBatch
 from spodernet.utils.global_config import Config, Backends
 from spodernet.utils.logger import Logger, LogLevel
@@ -30,7 +30,7 @@ import argparse
 np.set_printoptions(precision=3)
 
 cudnn.benchmark = True
-
+log = Logger("main.py.txt")
 
 ''' Preprocess knowledge graph using spodernet. '''
 def preprocess(dataset_name, delete_data=False):
@@ -106,7 +106,6 @@ def main(args, model_path):
     train_batcher.subscribe_to_events(eta)
     train_batcher.subscribe_to_start_of_epoch_event(eta)
     train_batcher.subscribe_to_events(LossHook('train', print_every_x_batches=args.log_interval))
-
     model.cuda()
     if args.resume:
         model_params = torch.load(model_path)
@@ -119,8 +118,8 @@ def main(args, model_path):
         print(np.array(total_param_size).sum())
         model.load_state_dict(model_params)
         model.eval()
-        #ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
-        #ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
+        ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
+        ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
     else:
         model.init()
 
@@ -154,11 +153,11 @@ def main(args, model_path):
         model.eval()
         with torch.no_grad():
             pass
-            #if epoch % 5 == 0 and epoch > 0:
-            #    ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
-            #if epoch % 5 == 0:
-            #    if epoch > 0:
-            #        #ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
+            if epoch % 5 == 0 and epoch > 0:
+                ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
+            if epoch % 5 == 0:
+                if epoch > 0:
+                    ranking_and_hits(model, test_rank_batcher, vocab, 'test_evaluation')
 
 
 if __name__ == '__main__':
@@ -198,6 +197,6 @@ if __name__ == '__main__':
 
     model_name = '{2}_{0}_{1}'.format(args.input_drop, args.hidden_drop, args.model)
     model_path = 'saved_models/{0}_{1}.model'.format(args.data, model_name)
-
+    
     torch.manual_seed(args.seed)
     main(args, model_path)
