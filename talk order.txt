@@ -1,0 +1,13 @@
+Eldad
+* dataset
+* convolution
+* Loss backpropagation
+* results all
+* summery + use-cases
+
+Vlad
+* intro
+* inverse relations
+* Feedforward
+* hyperparams
+* metrics explanation

@@ -89,14 +89,7 @@ def ranking_and_hits(model, dev_rank_batcher, vocab, name):
 
         dev_rank_batcher.state.loss = [0]
 
-    for i in range(10):
-        log.info('Hits left @{0}: {1}'.format(i+1, np.mean(hits_left[i])))
-        log.info('Hits right @{0}: {1}'.format(i+1, np.mean(hits_right[i])))
-        log.info('Hits @{0}: {1}'.format(i+1, np.mean(hits[i])))
-    log.info('Mean rank left: {0}', np.mean(ranks_left))
-    log.info('Mean rank right: {0}', np.mean(ranks_right))
-    log.info('Mean rank: {0}', np.mean(ranks))
-    log.info('Mean reciprocal rank left: {0}', np.mean(1./np.array(ranks_left)))
-    log.info('Mean reciprocal rank right: {0}', np.mean(1./np.array(ranks_right)))
+    for i in [0,4,9]:
+        log.info('@{0}: {1}'.format(i+1, np.mean(hits[i])))
     log.info('Mean reciprocal rank: {0}', np.mean(1./np.array(ranks)))
 

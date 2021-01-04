@@ -152,7 +152,6 @@ def main(args, model_path):
 
         model.eval()
         with torch.no_grad():
-            pass
             if epoch % 5 == 0 and epoch > 0:
                 ranking_and_hits(model, dev_rank_batcher, vocab, 'dev_evaluation')
             if epoch % 5 == 0:
@@ -183,7 +182,7 @@ if __name__ == '__main__':
     parser.add_argument('--use-bias', action='store_true', help='Use a bias in the convolutional layer. Default: True')
     parser.add_argument('--label-smoothing', type=float, default=0.1, help='Label smoothing value to use. Default: 0.1')
     parser.add_argument('--hidden-size', type=int, default=9728, help='The side of the hidden layer. The required size changes with the size of the embeddings. Default: 9728 (embedding size 200).')
-
+    
     args = parser.parse_args()
 
 
